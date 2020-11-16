@@ -38,3 +38,8 @@ class Settings:
     @staticmethod
     def ROOT_CRT() -> str:
         return _env("ROOT_CRT")
+
+    @class_property  # type: ignore
+    @staticmethod
+    def DEVICES_DIR() -> str:
+        return _env("DEVICES_DIR")

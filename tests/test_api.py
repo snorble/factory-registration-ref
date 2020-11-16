@@ -1,4 +1,6 @@
 import json
+import os
+from tempfile import TemporaryDirectory
 from unittest.mock import Mock, patch
 
 from flask_testing import TestCase  # type: ignore
@@ -39,13 +41,20 @@ class TestApi(TestCase):
         fields = Mock()
         fields.root_crt = "root_crt"
         fields.client_crt = "client_crt"
+        fields.uuid = "uuid"
+        fields.pubkey = "pub"
         sign_device_csr.return_value = fields
         overrides = {
             "pacman": {
                 "type": "ostree_foo",
             }
         }
-        r = self._sign({"csr": "n/a", "overrides": overrides})
+        with TemporaryDirectory() as d:
+            with patch("registration_ref.app.Settings") as settings:
+                settings.DEVICES_DIR = d
+                r = self._sign({"csr": "n/a", "overrides": overrides})
+                with open(os.path.join(d, "uuid")) as f:
+                    self.assertEqual("pub", f.read())
         self.assertEqual(201, r.status_code, r.data)
         toml = r.json["sota.toml"]
         self.assertIn("[pacman]\ntype = ostree_foo", toml)

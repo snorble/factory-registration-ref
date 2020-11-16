@@ -1,7 +1,10 @@
+import os
+
 from flask import Flask, abort, jsonify, request
 
 from registration_ref.crypto import sign_device_csr
 from registration_ref.sota_toml import sota_toml_fmt
+from registration_ref.settings import Settings
 
 app = Flask(__name__)
 
@@ -9,6 +12,12 @@ app = Flask(__name__)
 @app.before_request
 def _auth_user():
     pass
+
+
+def log_device(uuid: str, pubkey: str):
+    # Keep a log of created devices
+    with open(os.path.join(Settings.DEVICES_DIR, uuid), "w") as f:
+        f.write(pubkey)
 
 
 @app.route("/sign", methods=["POST"])
@@ -30,6 +39,8 @@ def sign_csr():
         fields = sign_device_csr(csr)
     except ValueError as e:
         abort(400, description=str(e))
+
+    log_device(fields.uuid, fields.pubkey)
 
     return (
         jsonify(
