@@ -15,11 +15,12 @@ from cryptography.hazmat.primitives.serialization import (
 from registration_ref.settings import Settings
 
 
-class DeviceGwFields(NamedTuple):
+class DeviceInfo(NamedTuple):
     namespace: str
     root_crt: str
     pubkey: str
     client_crt: str
+    uuid: str
 
 
 def _key_pair() -> Tuple[_EllipticCurvePrivateKey, _Certificate]:
@@ -44,7 +45,7 @@ def _key_pair() -> Tuple[_EllipticCurvePrivateKey, _Certificate]:
     return _key_pair._cached  # type: ignore
 
 
-def sign_device_csr(csr: str) -> DeviceGwFields:
+def sign_device_csr(csr: str) -> DeviceInfo:
     cert = default_backend().load_pem_x509_csr(csr.encode())
     factory = cert.subject.get_attributes_for_oid(NameOID.ORGANIZATIONAL_UNIT_NAME)[
         0
@@ -88,6 +89,6 @@ def sign_device_csr(csr: str) -> DeviceGwFields:
         format=PublicFormat.SubjectPublicKeyInfo, encoding=Encoding.PEM
     )
 
-    return DeviceGwFields(
-        factory, Settings.ROOT_CRT, public_bytes.decode(), signed_bytes.decode()
+    return DeviceInfo(
+        factory, Settings.ROOT_CRT, public_bytes.decode(), signed_bytes.decode(), uuid
     )

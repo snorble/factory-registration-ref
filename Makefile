@@ -7,4 +7,4 @@ format:
 	.venv/bin/black tests/*.py registration_ref/*.py
 
 test:
-	python3 -m unittest discover
+	.venv/bin/python3 -m unittest discover

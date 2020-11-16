@@ -1,4 +1,5 @@
 black
 cryptography
 flask
+flask_testing
 mypy
