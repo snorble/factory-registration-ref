@@ -1,0 +1,13 @@
+### PYTHON
+*.swp
+*.pyc
+*.egg*
+*build/
+*dist/
+.mypy_cache/
+.venv/
+
+.env
+
+### IDE
+.idea
