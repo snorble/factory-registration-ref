@@ -9,7 +9,7 @@ FROM alpine
 WORKDIR /srv/factory-registration-ref
 ENV PYTHONPATH=/srv/factory-registration-ref
 ENV FLASK_APP=registration_ref.app:app
-RUN apk add python3
+RUN apk add openssl python3
 COPY --from=build /usr/lib/python3.8/site-packages /usr/lib/python3.8/site-packages
 COPY --from=build /usr/bin/gunicorn /usr/bin/
 COPY --from=build /usr/bin/flask /usr/bin/

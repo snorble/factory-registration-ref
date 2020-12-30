@@ -30,7 +30,10 @@ class TestCrypo(TestCase):
         ).decode()
 
         subject = issuer = x509.Name(
-            [x509.NameAttribute(NameOID.COMMON_NAME, "example.com")]
+            [
+                x509.NameAttribute(NameOID.COMMON_NAME, "example.com"),
+                x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "acme-corp"),
+            ]
         )
         cert = (
             x509.CertificateBuilder()
@@ -69,7 +72,6 @@ class TestCrypo(TestCase):
             .sign(key, SHA256())
         )
         settings.CA_CRT = cert.public_bytes(Encoding.PEM).decode()
-        settings.FACTORY_NAME = "acme-corp"
 
     @staticmethod
     def _csr(key, uuid: str, factory: str) -> str:

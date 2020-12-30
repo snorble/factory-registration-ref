@@ -4,8 +4,6 @@ services:
   api:
     build: ./
     environment:
-      FACTORY_NAME: TODO
-      DEVICE_GATEWAY_SERVER: TODO.ota-lite.foundries.io:8443
       DEVICES_DIR: /devices
       CERTS_DIR: /certs
     volumes:

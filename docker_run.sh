@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+set -o pipefail
+
 # if FLASK_DEBUG is defined, we'll run via flask with dynamic reloading of
 # code changes to disk. This is helpful for debugging something already in k8s
 
@@ -15,6 +17,10 @@ assert_file() {
 assert_file factory_ca.pem
 assert_file local-ca.pem
 assert_file local-ca.key
+assert_file tls-crt
+
+dns=$(openssl x509 -text -noout -in ${CERTS_DIR}/tls-crt | grep DNS | cut -d: -f2)
+export DEVICE_GATEWAY_SERVER=https://${dns}:8443
 export ROOT_CRT=$(cat ${CERTS_DIR}/factory_ca.pem)
 export CA_CRT=$(cat ${CERTS_DIR}/local-ca.pem)
 export CA_KEY=$(cat ${CERTS_DIR}/local-ca.key)

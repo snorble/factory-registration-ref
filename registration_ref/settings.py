@@ -16,11 +16,6 @@ class class_property(property):
 class Settings:
     @class_property  # type: ignore
     @staticmethod
-    def FACTORY_NAME() -> str:
-        return _env("FACTORY_NAME")
-
-    @class_property  # type: ignore
-    @staticmethod
     def DEVICE_GATEWAY_SERVER() -> str:
         return _env("DEVICE_GATEWAY_SERVER")
 

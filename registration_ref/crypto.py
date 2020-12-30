@@ -51,10 +51,13 @@ def sign_device_csr(csr: str) -> DeviceInfo:
         0
     ].value
     uuid = cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value
-    if factory != Settings.FACTORY_NAME:
-        raise ValueError(f"Invalid factory({factory}) must be {Settings.FACTORY_NAME}")
 
     pk, ca = _key_pair()
+    actual_factory = ca.subject.get_attributes_for_oid(
+        NameOID.ORGANIZATIONAL_UNIT_NAME
+    )[0].value
+    if factory != actual_factory:
+        raise ValueError(f"Invalid factory({factory}) must be {actual_factory}")
 
     signed = (
         x509.CertificateBuilder()
