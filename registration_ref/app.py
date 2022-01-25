@@ -88,6 +88,7 @@ def sign_csr():
                 "root.crt": fields.root_crt,
                 "sota.toml": sota_toml_fmt(overrides, sota_config_dir),
                 "client.pem": fields.client_crt,
+                "client.chained": fields.client_crt + "\n" + Settings.CA_CRT,
             },
         ),
         201,
