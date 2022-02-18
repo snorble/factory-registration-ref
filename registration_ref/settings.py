@@ -22,6 +22,11 @@ class Settings:
 
     @class_property  # type: ignore
     @staticmethod
+    def OSTREE_SERVER() -> str:
+        return _env("OSTREE_SERVER")
+
+    @class_property  # type: ignore
+    @staticmethod
     def CA_KEY() -> str:
         return _env("CA_KEY")
 

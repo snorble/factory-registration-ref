@@ -20,7 +20,9 @@ assert_file local-ca.key
 assert_file tls-crt
 
 dns=$(openssl x509 -text -noout -in ${CERTS_DIR}/tls-crt | grep -o "DNS:[[:print:]]*.ota-lite.foundries.io" | sed -e 's/^DNS://')
+ostree_hostname=$(openssl x509 -ext subjectAltName -noout -in ${CERTS_DIR}/tls-crt  | grep -o "DNS:[^,]*ostree.foundries.io" | sed -e 's/^DNS://')
 export DEVICE_GATEWAY_SERVER=https://${dns}:8443
+export OSTREE_SERVER=https://${ostree_hostname}:8443
 export ROOT_CRT=$(cat ${CERTS_DIR}/factory_ca.pem)
 export CA_CRT=$(cat ${CERTS_DIR}/local-ca.pem)
 export CA_KEY=$(cat ${CERTS_DIR}/local-ca.key)

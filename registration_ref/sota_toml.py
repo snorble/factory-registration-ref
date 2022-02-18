@@ -39,7 +39,7 @@ def _mk_config():
                 OrderedDict(
                     [
                         ("type", '"ostree+compose_apps"'),
-                        ("ostree_server", '"{gateway_server}/treehub"'),
+                        ("ostree_server", '"{ostree_server}/ostree"'),
                     ]
                 ),
             ),
@@ -81,6 +81,7 @@ def sota_toml_fmt(overrides=None, sota_config_dir="/var/sota"):
             else:
                 v = v.format(
                     gateway_server=Settings.DEVICE_GATEWAY_SERVER,
+                    ostree_server=Settings.OSTREE_SERVER,
                     sota_config_dir=sota_config_dir,
                 )
                 ret.append("{} = {}".format(k, v))
