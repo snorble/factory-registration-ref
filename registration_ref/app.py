@@ -64,6 +64,10 @@ def sign_csr():
     if not isinstance(csr, str):
         abort(400, description="Invalid data type for 'csr'")
 
+    hwid = data.get("hardware-id")
+    if not hwid:
+        abort(400, description="Missing required field 'hardware-id'")
+
     overrides = data.get("overrides") or {}
     sota_config_dir = data.get("sota-config-dir") or "/var/sota"
     name = data.get("name") or None
@@ -86,7 +90,7 @@ def sign_csr():
         jsonify(
             {
                 "root.crt": fields.root_crt,
-                "sota.toml": sota_toml_fmt(overrides, sota_config_dir),
+                "sota.toml": sota_toml_fmt(hwid, overrides, sota_config_dir),
                 "client.pem": fields.client_crt,
                 "client.chained": fields.client_crt + "\n" + Settings.CA_CRT,
             },
