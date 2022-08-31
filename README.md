@@ -29,8 +29,8 @@ Now copy the required files to this service:
 ~~~
  $ mkdir -p ./data/certs
  $ cp /really-secure-directory/factory_ca.pem ./data/certs/
- $ cp /really-secure-directory/local_ca.pem ./data/certs/
- $ cp /really-secure-directory/local_ca.key ./data/certs/
+ $ cp /really-secure-directory/local-ca.pem ./data/certs/
+ $ cp /really-secure-directory/local-ca.key ./data/certs/
  $ cp /really-secure-directory/tls-crt ./data/certs/
 
  # some of these files are only readable to the file owner. To deal with
