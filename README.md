@@ -51,9 +51,9 @@ You can now run this API with:
  $ docker-compose up
 ~~~
 
-From an LmP device:
+To register a device, run as root from LmP device:
 ~~~
- $ DEVICE_API=http://<IP of docker-compose host>/sign lmp-device-register [-T <TOKEN>]
+ $ DEVICE_API=http://<IP of docker-compose host>/sign lmp-device-register [-T <TOKEN>] [-f <factory>]
 ~~~
 
 # Testing/Troubleshooting
