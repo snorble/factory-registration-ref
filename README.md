@@ -56,6 +56,9 @@ To register a device, run as root from LmP device:
  $ DEVICE_API=http://<IP of docker-compose host>/sign lmp-device-register [-T <TOKEN>] [-f <factory>]
 ~~~
 
+**NOTE** If you're emulating the device with QEMU, by default the gateway (host) IP is `10.0.2.2`.
+(i.e. `sudo DEVICE_API=http://10.0.2.2:80/sign lmp-device-register [-T <TOKEN>] [-f <factory>]`)
+
 # Testing/Troubleshooting
 This project includes a simple `fake-lmp-device-register` that can be used
 to quickly test this project's API.
