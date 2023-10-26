@@ -65,6 +65,14 @@ To register a device, run as root from LmP device:
 **NOTE** If you're emulating the device with QEMU, by default the gateway (host) IP is `10.0.2.2`.
 (i.e. `sudo DEVICE_API=http://10.0.2.2:80/sign lmp-device-register [-T <TOKEN>] [-f <factory>]`)
 
+# Pre-Adding Device to Foundries
+This is used to rename the Device using UUID as a name to having Serial Number as the name.  It looks at the ./data/devices folder and processes each newly added device by pre-adding them to foundries with the correct name.  The first time the Doll is onboarded and brought online, it will attach to the correctly named pre-added Device in foundries.  
+
+This script is run at the end of the day as a last step to pre-add all the Dolls that have been registered with the above Registration Process  
+
+Ensure this script is run with sudo privileges: `sudo python3 add_devices_async.py`  
+Once a Device is successfully pre-added to foundries, the file in ./data/devices folder is removed
+
 # Testing/Troubleshooting
 This project includes a simple `fake-lmp-device-register` that can be used
 to quickly test this project's API.
