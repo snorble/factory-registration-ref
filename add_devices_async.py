@@ -19,7 +19,8 @@ with open(os.path.join(TOKEN_PATH), "r") as f:
     api_token = f.read().replace("\n", "")
 
 for device in os.listdir(DEVICES_PATH):
-    with open(os.path.join(DEVICES_PATH, device)) as f:
+    device_path = os.path.join(DEVICES_PATH, device)
+    with open(device_path) as f:
         device_data = json.load(f)
 
         # decode client key
@@ -37,12 +38,12 @@ for device in os.listdir(DEVICES_PATH):
         if response.status_code == 409:
             print("device already added:", device_data["uuid"])
             # remove device
-            os.remove(os.path.join(DEVICES_PATH, device))
+            os.remove(device_path)
 
         elif response.status_code == 201:
             print("device successfully added:", device_data["uuid"])
             # remove device
-            os.remove(os.path.join(DEVICES_PATH, device))
+            os.remove(device_path)
 
         else:
             # otherwise some error occurred
