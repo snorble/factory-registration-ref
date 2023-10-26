@@ -38,7 +38,7 @@ Now copy the required files to this service:
  chmod +r ./data/certs/*
 ~~~
  
- A Foundries.io API token (scope `devices:create`) can be obtained and saved as ./token/create_device_scope
+ A Foundries.io API token (scope `devices:create` and `devices:read`) can be obtained and saved as ./token/create_device_scope
  This is used by the add_devices_async.py to properly name the newly added device in foundries
 ~~~
 $ mkdir ./token

@@ -27,8 +27,6 @@ for device in os.listdir(DEVICES_PATH):
         client_key_bytes = device_data["client_key"].encode("ascii")
         client_key = base64.b64decode(client_key_bytes).decode("ascii")
 
-        # print(client_key)
-
         # add device
         headers = {"OSF-TOKEN": api_token}
         data = {"client.pem": client_key, "name": device_data["name"]}
@@ -38,15 +36,21 @@ for device in os.listdir(DEVICES_PATH):
         if response.status_code == 409:
             print("device already added:", device_data["uuid"])
             # remove device
-            os.remove(device_path)
+            print("removing device file: ", device_data["uuid"])
+            # os.remove(device_path)
 
         elif response.status_code == 201:
             print("device successfully added:", device_data["uuid"])
             # check device before removing
 
-            # remove device
-            os.remove(device_path)
-
+            device_get_response = requests.get(ENDPOINT + "/" + device_data["name"], headers=headers)
+            if device_get_response.status_code == 200:
+                # check UUID matches before removing
+                factory_device_data = device_get_response.json()
+                if factory_device_data["uuid"] == device_data["uuid"]:
+                    print("removing device file: ", device_data["uuid"])
+                    # remove device
+                    os.remove(device_path)
         else:
             # otherwise some error occurred
             print(response.status_code, " : ", response.text)
