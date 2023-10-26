@@ -20,7 +20,7 @@ First create/register your PKI with Foundries.io:
 
 Next set this project up with:
 ~~~
- $ git clone https://github.com/foundriesio/factory-registration-ref
+ $ git clone git@github.com:snorble/factory-registration-ref.git
  $ cd factory-registration-ref
  $ docker-compose build
 ~~~
