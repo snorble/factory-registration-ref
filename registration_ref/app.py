@@ -1,3 +1,4 @@
+import base64
 import os
 from time import sleep
 from typing import Optional
@@ -17,10 +18,29 @@ def _auth_user():
     pass
 
 
-def log_device(uuid: str, pubkey: str):
+def log_device(uuid: str, client_key: str, name: str):
     # Keep a log of created devices
     with open(os.path.join(Settings.DEVICES_DIR, uuid), "w") as f:
-        f.write(pubkey)
+        # save data as json for ease of parsing later
+        # for debugging only
+        # print(client_key)
+
+        base64_client_key_bytes = client_key.encode("ascii")
+        base64_encoded_client_key_bytes = base64.b64encode(base64_client_key_bytes)
+        base64_encoded_client_key_string = base64_encoded_client_key_bytes.decode("ascii")
+
+        device_detail = jsonify (
+            {
+                "uuid": uuid,
+                "name": name,
+                "client_key": base64_encoded_client_key_string
+            }
+        ).get_data(as_text=True)
+
+        f.write(device_detail)
+
+        # for debugging only
+        # print(base64.b64decode(base64_encoded_client_key_string.encode("ascii")).decode("ascii"))
 
 
 def create_in_foundries(client_cert: str, api_token: str, name: Optional[str] = None):
@@ -90,7 +110,7 @@ def sign_csr():
                 app.logger.info("Creating in foundries with %s", fields.uuid)
                 create_in_foundries(fields.client_crt, tok, name)
 
-    log_device(fields.uuid, fields.pubkey)
+    log_device(fields.uuid, fields.client_crt, name)
 
     return (
         jsonify(
