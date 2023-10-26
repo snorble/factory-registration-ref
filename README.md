@@ -37,6 +37,12 @@ Now copy the required files to this service:
  # docker user permissions the easy way:
  chmod +r ./data/certs/*
 ~~~
+ 
+ A Foundries.io API token (scope `devices:create`) can be obtained and saved as ./token/create_device_scope
+ This is used by the add_devices_async.py to properly name the newly added device in foundries
+~~~
+$ mkdir ./token
+~~~
 
 You can optionally copy a Foundries.io API token (scope `devices:create`) so
 that devices can be defined/configured before the certificate is returned back

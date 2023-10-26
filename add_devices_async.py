@@ -42,6 +42,8 @@ for device in os.listdir(DEVICES_PATH):
 
         elif response.status_code == 201:
             print("device successfully added:", device_data["uuid"])
+            # check device before removing
+
             # remove device
             os.remove(device_path)
 
