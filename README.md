@@ -64,7 +64,7 @@ To register a device, run as root from LmP device:
 
 Example, Host Machine IP address of 192.168.0.11, with PRODUCTION flag on, and name of device as i350-snorble-442d67aaaa05
 ~~~
-DEVICE_API=http://192.168.0.36/sign PRODUCTION=on lmp-device-register -t factory -T na -n i350-snorble-442d67aaaa05
+DEVICE_API=http://192.168.0.11/sign PRODUCTION=on lmp-device-register -t factory -T na -n i350-snorble-442d67aaaa05
 ~~~
 
 **NOTE** If you're emulating the device with QEMU, by default the gateway (host) IP is `10.0.2.2`.
